@@ -10,6 +10,16 @@ class MyProducts extends StatefulWidget {
 class _MyProductsState extends State<MyProducts> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Products"),
+        backgroundColor: Colors.orange,
+      ),
+      body: Column(
+        children: [
+          
+        ],
+      ),
+    );
   }
 }

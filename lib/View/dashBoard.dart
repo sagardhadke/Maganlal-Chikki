@@ -9,12 +9,18 @@ class MyDashboard extends StatefulWidget {
 
 class _MyDashboardState extends State<MyDashboard> {
   int myIndex = 0;
+  List<Widget> widgetList = const [
+    MyHome(),
+    MyProducts(),
+    MyCategory(),
+    MyAbout()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Bottom Nav"),
-        backgroundColor: Colors.orange,
+      body: IndexedStack(
+        children: widgetList,
+        index: myIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
