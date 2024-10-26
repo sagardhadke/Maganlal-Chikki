@@ -13,12 +13,21 @@ class _MyHomeState extends State<MyHome> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
-        backgroundColor: Colors.orange,
-      ),
-      body: Column(
-        children: [
-          
+        backgroundColor: Colors.white,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.notifications_active_outlined),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.shopping_bag_outlined),
+          )
         ],
+      ),
+      backgroundColor: Color(0XFFF4F4F4),
+      body: Column(
+        children: [],
       ),
     );
   }

@@ -13,8 +13,9 @@ class _MyCategoryState extends State<MyCategory> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Category"),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.white,
       ),
+      backgroundColor: Color(0XFFF4F4F4),
       body: Column(
         children: [
           

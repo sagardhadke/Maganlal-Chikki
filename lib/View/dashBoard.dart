@@ -24,7 +24,7 @@ class _MyDashboardState extends State<MyDashboard> {
       ),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.amber,
+          selectedItemColor: Color(0XFF1D4ED8),
           onTap: (index) {
             setState(() {
               myIndex = index;
@@ -38,7 +38,7 @@ class _MyDashboardState extends State<MyDashboard> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_basket_outlined), label: 'Products'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.info_outlined), label: 'About')
+                icon: Icon(Icons.info_outline), label: 'About')
           ]),
     );
   }

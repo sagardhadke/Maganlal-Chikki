@@ -6,3 +6,6 @@ export 'package:maganlal_chikki/View/Screens/about.dart';
 export 'package:maganlal_chikki/View/Screens/category.dart';
 export 'package:maganlal_chikki/View/Screens/home.dart';
 export 'package:maganlal_chikki/View/Screens/products.dart';
+
+//Colors
+export 'package:maganlal_chikki/colors.dart';
