@@ -61,7 +61,7 @@ class Uihelper {
             height: 85,
             width: 85,
             decoration: BoxDecoration(
-                color: Colors.amber[200],
+                color: Colors.orange[300],
                 borderRadius: BorderRadius.circular(100)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -76,7 +76,11 @@ class Uihelper {
                 )
               ],
             )),
-        Text(text)
+        Text(
+          text,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold),
+        )
       ],
     );
   }

@@ -18,7 +18,18 @@ class _MyProductsState extends State<MyProducts> {
       backgroundColor: Color(0XFFF4F4F4),
       body: Column(
         children: [
-          
+          // GridView.builder(
+                //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //         crossAxisCount: 2),
+                //     itemBuilder: (context, index) {
+                //       return Container(
+                //           child: Column(
+                //             children: [
+                //               CachedNetworkImage(imageUrl: ofAbout![index].image!)
+                //             ],
+                //           ),
+                //       );
+                //     })
         ],
       ),
     );

@@ -12,15 +12,13 @@ class _MyContactUsState extends State<MyContactUs> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Products"),
+        title: Text("Contact Us"),
         backgroundColor: Colors.white,
       ),
       drawer: Uihelper.myDrawer(context),
       backgroundColor: Color(0XFFF4F4F4),
       body: Column(
-        children: [
-          
-        ],
+        children: [],
       ),
     );
   }

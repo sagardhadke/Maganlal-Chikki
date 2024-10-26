@@ -105,20 +105,21 @@ class _MyHomeState extends State<MyHome> {
                   child: CircularProgressIndicator.adaptive(),
                 )
               : SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
                     children: [
                       for (int b = 0; b < ofCategory!.length; b++) ...{
                         Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Uihelper.customCategories(
-                            ofCategory![b].catImage!, ofCategory![b].catName!),
-                                                )
-                        
+                          padding: EdgeInsets.all(10),
+                          child: Uihelper.customCategories(
+                              ofCategory![b].catImage!,
+                              ofCategory![b].catName!),
+                        )
                       },
                     ],
                   ),
-              ),
+                ),
+          SizedBox(height: 10),
           ImageSlideshow(
             children: ofHomeImgGall != null && ofHomeImgGall!.isNotEmpty
                 ? [
