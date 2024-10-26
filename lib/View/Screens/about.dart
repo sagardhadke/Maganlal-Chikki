@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:maganlal_chikki/Exports/myExports.dart';
 
 class MyAbout extends StatefulWidget {
   const MyAbout({super.key});
@@ -16,6 +16,7 @@ class _MyAboutState extends State<MyAbout> {
         backgroundColor: Colors.white,
       ),
       backgroundColor: Color(0XFFF4F4F4),
+      drawer: Uihelper.myDrawer(context),
       body: Column(
         children: [
           

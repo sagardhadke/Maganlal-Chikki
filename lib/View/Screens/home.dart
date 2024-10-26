@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:maganlal_chikki/Exports/myExports.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -25,6 +25,7 @@ class _MyHomeState extends State<MyHome> {
           )
         ],
       ),
+      drawer: Uihelper.myDrawer(context),
       backgroundColor: Color(0XFFF4F4F4),
       body: Column(
         children: [],

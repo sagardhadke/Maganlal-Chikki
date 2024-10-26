@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:maganlal_chikki/Exports/myExports.dart';
 
 class MyCategory extends StatefulWidget {
   const MyCategory({super.key});
@@ -16,6 +16,7 @@ class _MyCategoryState extends State<MyCategory> {
         backgroundColor: Colors.white,
       ),
       backgroundColor: Color(0XFFF4F4F4),
+      drawer: Uihelper.myDrawer(context),
       body: Column(
         children: [
           

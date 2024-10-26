@@ -1,12 +1,13 @@
 import 'package:maganlal_chikki/Exports/myExports.dart';
-class MyProducts extends StatefulWidget {
-  const MyProducts({super.key});
+
+class MyContactUs extends StatefulWidget {
+  const MyContactUs({super.key});
 
   @override
-  State<MyProducts> createState() => _MyProductsState();
+  State<MyContactUs> createState() => _MyContactUsState();
 }
 
-class _MyProductsState extends State<MyProducts> {
+class _MyContactUsState extends State<MyContactUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
