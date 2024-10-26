@@ -1,5 +1,4 @@
 import 'package:maganlal_chikki/Exports/myExports.dart';
-import 'package:maganlal_chikki/View/Screens/contact.dart';
 
 class Uihelper {
   static Widget myDrawer(BuildContext context) {
@@ -13,35 +12,40 @@ class Uihelper {
             leading: Icon(Icons.home),
             title: const Text("Home"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyHome()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyDashboard()));
             },
           ),
           ListTile(
             leading: Icon(Icons.category_rounded),
             title: const Text("Category"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyCategory()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyCategory()));
             },
           ),
           ListTile(
             leading: Icon(Icons.shopping_basket_outlined),
             title: const Text("Products"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyProducts()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyProducts()));
             },
           ),
           ListTile(
             leading: Icon(Icons.info_outline),
             title: const Text("About Us"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyAbout()));
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => MyAbout()));
             },
           ),
           ListTile(
             leading: Icon(Icons.support_agent_sharp),
             title: const Text("Contact Us"),
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyContactUs()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyContactUs()));
             },
           ),
         ],
