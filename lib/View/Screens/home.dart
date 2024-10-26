@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:maganlal_chikki/Exports/myExports.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,6 +10,7 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
   List<HomeImageGallery>? ofHomeImgGall;
+  List<Category>? ofCategory;
 
   void imageGall() async {
     try {
@@ -28,10 +27,24 @@ class _MyHomeState extends State<MyHome> {
     }
   }
 
+  void categoriesApi() async {
+    try {
+      var categoryApi = await http.get(Uri.parse(
+          "https://appy.trycatchtech.com/v3/maganlalchikki/category_list"));
+      if (categoryApi.statusCode == 200) {
+        ofCategory = Category.ofCategory(jsonDecode(categoryApi.body));
+        print("Category API Response ${categoryApi}");
+        setState(() {});
+      }
+    } catch (e) {
+      print("Error ${e.toString()}");
+    }
+  }
+
   @override
   void initState() {
     imageGall();
-
+    categoriesApi();
     super.initState();
   }
 
@@ -85,9 +98,27 @@ class _MyHomeState extends State<MyHome> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text("View All >"),
               ),
-             
             ],
           ),
+          ofCategory == null
+              ? Center(
+                  child: CircularProgressIndicator.adaptive(),
+                )
+              : SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                    children: [
+                      for (int b = 0; b < ofCategory!.length; b++) ...{
+                        Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Uihelper.customCategories(
+                            ofCategory![b].catImage!, ofCategory![b].catName!),
+                                                )
+                        
+                      },
+                    ],
+                  ),
+              ),
           ImageSlideshow(
             children: ofHomeImgGall != null && ofHomeImgGall!.isNotEmpty
                 ? [

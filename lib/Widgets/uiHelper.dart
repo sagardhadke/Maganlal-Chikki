@@ -1,3 +1,4 @@
+import 'package:circular_image/circular_image.dart';
 import 'package:maganlal_chikki/Exports/myExports.dart';
 
 class Uihelper {
@@ -50,6 +51,33 @@ class Uihelper {
           ),
         ],
       ),
+    );
+  }
+
+  static customCategories(String imgUri, String text) {
+    return Column(
+      children: [
+        Container(
+            height: 85,
+            width: 85,
+            decoration: BoxDecoration(
+                color: Colors.amber[200],
+                borderRadius: BorderRadius.circular(100)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // CircularImage(source: imgUri),
+                ClipOval(
+                  child: Container(
+                    height: 80,
+                    width: 80,
+                    child: CachedNetworkImage(imageUrl: imgUri),
+                  ),
+                )
+              ],
+            )),
+        Text(text)
+      ],
     );
   }
 }

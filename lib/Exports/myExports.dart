@@ -14,10 +14,18 @@ export 'package:maganlal_chikki/colors.dart';
 //UI Helper 
 export 'package:maganlal_chikki/Widgets/uiHelper.dart';
 
+//Models
 export 'package:maganlal_chikki/Model/HomeImageGallery.dart';
+export 'package:maganlal_chikki/Model/Category.dart';
+
 export 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 export 'dart:async';
 export 'dart:convert';
 
 export 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+
+export 'package:cached_network_image/cached_network_image.dart';
+
+//Google Fonts
+export 'package:google_fonts/google_fonts.dart';
