@@ -1,5 +1,6 @@
 import 'package:maganlal_chikki/Exports/myExports.dart';
 import 'package:http/http.dart' as http;
+import 'package:maganlal_chikki/View/Screens/allProducts.dart';
 
 class MyCategory extends StatefulWidget {
   const MyCategory({super.key});
@@ -67,25 +68,35 @@ class _MyCategoryState extends State<MyCategory> {
                           crossAxisSpacing: 5),
                       itemCount: ofCategory!.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 5,
-                          color: Colors.white,
-                          child: Column(
-                            children: [
-                              ClipOval(
-                                child: CachedNetworkImage(
-                                    height: 150,
-                                    width: double.infinity,
-                                    fit: BoxFit.fill,
-                                    imageUrl: ofCategory![index].catImage!),
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                ofCategory![index].catName!,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 17),
-                              )
-                            ],
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyAllProducts(
+                                        id: ofCategory![index].id!, titles: ofCategory![index].catName!,)));
+                          },
+                          child: Card(
+                            elevation: 5,
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                ClipOval(
+                                  child: CachedNetworkImage(
+                                      height: 150,
+                                      width: double.infinity,
+                                      fit: BoxFit.fill,
+                                      imageUrl: ofCategory![index].catImage!),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  ofCategory![index].catName!,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                )
+                              ],
+                            ),
                           ),
                         );
                       }),

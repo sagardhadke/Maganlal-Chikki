@@ -1,5 +1,6 @@
 import 'package:maganlal_chikki/Exports/myExports.dart';
 import 'package:http/http.dart' as http;
+import 'package:maganlal_chikki/View/Screens/allProducts.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -109,11 +110,23 @@ class _MyHomeState extends State<MyHome> {
                   child: Row(
                     children: [
                       for (int b = 0; b < ofCategory!.length; b++) ...{
-                        Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Uihelper.customCategories(
-                              ofCategory![b].catImage!,
-                              ofCategory![b].catName!),
+                        GestureDetector(
+                          onTap: () {
+                            Uihelper.logger.d("Click ${ofCategory![b].id!}");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyAllProducts(
+                                          id: ofCategory![b].id!,
+                                          titles: ofCategory![b].catName!,
+                                        )));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Uihelper.customCategories(
+                                ofCategory![b].catImage!,
+                                ofCategory![b].catName!),
+                          ),
                         )
                       },
                     ],
