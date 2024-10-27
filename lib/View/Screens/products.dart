@@ -11,17 +11,22 @@ class MyProducts extends StatefulWidget {
 class _MyProductsState extends State<MyProducts> {
   List<Products>? ofProducts;
   List<Category>? ofCategories;
-  var logger = Logger();
+  int? selectedCategoryId;
 
-  void getProducts() async {
+  void getProducts(int categoryId) async {
     try {
       var productsApi = await http.get(Uri.parse(
-          "https://appy.trycatchtech.com/v3/maganlalchikki/product_list?category_id=1"));
-      ofProducts = Products.ofProducts(jsonDecode(productsApi.body));
-      print("Product API Response");
-      setState(() {});
+          "https://appy.trycatchtech.com/v3/maganlalchikki/product_list?category_id=$categoryId"));
+
+      if (productsApi.statusCode == 200) {
+        ofProducts = Products.ofProducts(jsonDecode(productsApi.body));
+        print("Product API Response: $ofProducts");
+        setState(() {});
+      } else {
+        print("Failed to Load Product API");
+      }
     } catch (e) {
-      print("Error ${e.toString()}");
+      print("Error to Fetching Products${e.toString()}");
     }
   }
 
@@ -29,43 +34,58 @@ class _MyProductsState extends State<MyProducts> {
     try {
       var categoriesApi = await http.get(Uri.parse(
           "https://appy.trycatchtech.com/v3/maganlalchikki/category_list"));
-      ofCategories = Category.ofCategory(jsonDecode(categoriesApi.body));
-      print("Categories API Response ${ofCategories}");
-      setState(() {});
+      if (categoriesApi.statusCode == 200) {
+        ofCategories = Category.ofCategory(jsonDecode(categoriesApi.body));
+        print("Categories API Response ${ofCategories}");
+        setState(() {
+          if (ofCategories != null && ofCategories!.isNotEmpty) {
+            selectedCategoryId = int.parse(ofCategories![0].id!);
+            getProducts(selectedCategoryId!);
+          }
+        });
+      } else {
+        print("Failed to Load Categories API");
+      }
     } catch (e) {
-      print("Error ${e.toString()}");
+      print("Error to Fetching Categories: ${e.toString()}");
     }
   }
 
   @override
   void initState() {
-    getProducts();
-    getCategories();
     super.initState();
+    getCategories();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Products"),
+        title: const Text("Products"),
         backgroundColor: Colors.white,
       ),
       drawer: Uihelper.myDrawer(context),
-      backgroundColor: Color(0XFFF4F4F4),
+      backgroundColor: const Color(0XFFF4F4F4),
       body: Row(
         children: [
           Container(
-            color: Color(0XFFF9FAFB),
+            color: const Color(0XFFF9FAFB),
             width: MediaQuery.sizeOf(context).height / 07,
             child: ofCategories == null
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator.adaptive(),
                   )
                 : ListView.builder(
                     itemCount: ofCategories!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return SingleChildScrollView(
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedCategoryId =
+                                int.parse(ofCategories![index].id!);
+                            getProducts(selectedCategoryId!);
+                          });
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Uihelper.customCategories(
@@ -76,7 +96,6 @@ class _MyProductsState extends State<MyProducts> {
                       );
                     }),
           ),
-
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -86,7 +105,7 @@ class _MyProductsState extends State<MyProducts> {
                 childAspectRatio: 1 / 1.62,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              itemCount: ofProducts!.length,
+              itemCount: ofProducts?.length ?? 0,
               itemBuilder: (context, index) {
                 return Container(
                   padding: const EdgeInsets.all(15),
@@ -132,61 +151,6 @@ class _MyProductsState extends State<MyProducts> {
               },
             ),
           ),
-
-          // Expanded(
-          //   child: ofProducts == null
-          //       ? const Center(child: CircularProgressIndicator())
-          //       : GridView.builder(
-          //           gridDelegate:
-          //               const SliverGridDelegateWithFixedCrossAxisCount(
-          //             crossAxisCount: 2,
-          //             mainAxisSpacing: 15,
-          //             crossAxisSpacing: 15,
-          //           ),
-          //           itemCount: ofProducts!.length,
-          //           itemBuilder: (context, index) {
-          //             return Container(
-          //               padding: const EdgeInsets.all(15),
-          //               decoration: BoxDecoration(
-          //                 color: Colors.amber[500],
-          //                 borderRadius: BorderRadius.circular(15),
-          //               ),
-          //               child: Column(
-          //                 crossAxisAlignment: CrossAxisAlignment.start,
-          //                 children: [
-          //                   ClipRRect(
-          //                     borderRadius: BorderRadius.circular(10),
-          //                     child: CachedNetworkImage(
-          //                       imageUrl: ofProducts![index].images!.isNotEmpty
-          //                           ? ofProducts![index].images![0]
-          //                           : '',
-          //                       width: double.infinity,
-          //                       fit: BoxFit.contain,
-          //                     ),
-          //                   ),
-          //                   const SizedBox(height: 10),
-          //                   Text(
-          //                     ofProducts![index].title!,
-          //                     style: const TextStyle(
-          //                       fontWeight: FontWeight.bold,
-          //                       fontSize: 16,
-          //                     ),
-          //                   ),
-          //                   const SizedBox(height: 5),
-          //                   Text(
-          //                     '\$${ofProducts![index].price}',
-          //                     style: const TextStyle(
-          //                       color: Colors.green,
-          //                       fontWeight: FontWeight.bold,
-          //                       fontSize: 14,
-          //                     ),
-          //                   ),
-          //                 ],
-          //               ),
-          //             );
-          //           },
-          //         ),
-          // )
         ],
       ),
     );
