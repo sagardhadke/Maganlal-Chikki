@@ -1,5 +1,6 @@
 import 'package:maganlal_chikki/Exports/myExports.dart';
 import 'package:http/http.dart' as http;
+import 'package:maganlal_chikki/View/Screens/productsDetails.dart';
 
 class MyAllProducts extends StatefulWidget {
   final String id;
@@ -61,7 +62,20 @@ class _MyAllProductsState extends State<MyAllProducts> {
                       itemCount: ofProducts!.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Uihelper.logger.i("Click");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyProductsDetails(
+                                        titles: ofProducts![index].title!,
+                                        image: ofProducts![index].images![0],
+                                        price: ofProducts![index].price!,
+                                        small_description: ofProducts![index]
+                                            .smallDescription!,
+                                        full_description: ofProducts![index]
+                                            .fullDescription!)));
+                          },
                           child: Card(
                             elevation: 5,
                             color: Colors.white,
