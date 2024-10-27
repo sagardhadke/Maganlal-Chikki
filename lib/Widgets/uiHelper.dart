@@ -1,4 +1,3 @@
-import 'package:circular_image/circular_image.dart';
 import 'package:maganlal_chikki/Exports/myExports.dart';
 
 class Uihelper {

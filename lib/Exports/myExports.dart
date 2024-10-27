@@ -34,3 +34,5 @@ export 'package:google_fonts/google_fonts.dart';
 
 //Logger
 export 'package:logger/logger.dart';
+
+export 'package:circular_image/circular_image.dart';
