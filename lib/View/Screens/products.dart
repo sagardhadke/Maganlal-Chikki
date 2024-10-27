@@ -20,13 +20,13 @@ class _MyProductsState extends State<MyProducts> {
 
       if (productsApi.statusCode == 200) {
         ofProducts = Products.ofProducts(jsonDecode(productsApi.body));
-        print("Product API Response: $ofProducts");
+        Uihelper.logger.d("Product API Response: $ofProducts");
         setState(() {});
       } else {
-        print("Failed to Load Product API");
+        Uihelper.logger.e("Failed to Load Product API");
       }
     } catch (e) {
-      print("Error to Fetching Products${e.toString()}");
+      Uihelper.logger.e("Error to Fetching Products${e.toString()}");
     }
   }
 
@@ -36,7 +36,7 @@ class _MyProductsState extends State<MyProducts> {
           "https://appy.trycatchtech.com/v3/maganlalchikki/category_list"));
       if (categoriesApi.statusCode == 200) {
         ofCategories = Category.ofCategory(jsonDecode(categoriesApi.body));
-        print("Categories API Response ${ofCategories}");
+        Uihelper.logger.d("Categories API Response ${ofCategories}");
         setState(() {
           if (ofCategories != null && ofCategories!.isNotEmpty) {
             selectedCategoryId = int.parse(ofCategories![0].id!);
@@ -44,10 +44,10 @@ class _MyProductsState extends State<MyProducts> {
           }
         });
       } else {
-        print("Failed to Load Categories API");
+        Uihelper.logger.e("Failed to Load Categories API");
       }
     } catch (e) {
-      print("Error to Fetching Categories: ${e.toString()}");
+      Uihelper.logger.e("Error to Fetching Categories: ${e.toString()}");
     }
   }
 
@@ -96,61 +96,83 @@ class _MyProductsState extends State<MyProducts> {
                       );
                     }),
           ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-                childAspectRatio: 1 / 1.62,
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              itemCount: ofProducts?.length ?? 0,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
+          ofProducts == null
+              ? Center(
+                  child: CircularProgressIndicator.adaptive(),
+                )
+              : Expanded(
+                  child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5,
+                      childAspectRatio: 1 / 1.72
+                      ,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                    itemCount: ofProducts?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyProductsDetails(
+                                      titles: ofProducts![index].title!,
+                                      image: ofProducts![index].images![0],
+                                      price: ofProducts![index].price!,
+                                      small_description:
+                                          ofProducts![index].smallDescription!,
+                                      full_description: ofProducts![index]
+                                          .fullDescription!)));
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      ofProducts![index].images!.isNotEmpty
+                                          ? ofProducts![index].images![0]
+                                          : '',
+                                  width: double.infinity,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                ofProducts![index].title!,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                '\₹${ofProducts![index].price}',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          imageUrl: ofProducts![index].images!.isNotEmpty
-                              ? ofProducts![index].images![0]
-                              : '',
-                          width: double.infinity,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        ofProducts![index].title!,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        '\₹${ofProducts![index].price}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
+                ),
         ],
       ),
     );

@@ -63,9 +63,11 @@ class _MyCategoryState extends State<MyCategory> {
                 Expanded(
                   child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 5,
-                          crossAxisSpacing: 5),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 5,
+                        crossAxisSpacing: 5,
+                        childAspectRatio: 1 / 1.10,
+                      ),
                       itemCount: ofCategory!.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
@@ -74,7 +76,9 @@ class _MyCategoryState extends State<MyCategory> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => MyAllProducts(
-                                        id: ofCategory![index].id!, titles: ofCategory![index].catName!,)));
+                                          id: ofCategory![index].id!,
+                                          titles: ofCategory![index].catName!,
+                                        )));
                           },
                           child: Card(
                             elevation: 5,

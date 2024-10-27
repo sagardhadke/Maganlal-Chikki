@@ -70,7 +70,7 @@ class _MyAllProductsState extends State<MyAllProducts> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: 5,
-                          childAspectRatio: 1 / 1.40,
+                          childAspectRatio: 1 / 1.50,
                           crossAxisSpacing: 5),
                       padding: const EdgeInsets.symmetric(horizontal: 5.0),
                       itemCount: ofProducts!.length,

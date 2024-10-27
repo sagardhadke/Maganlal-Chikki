@@ -254,7 +254,7 @@ class _MyHomeState extends State<MyHome> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 5,
                     mainAxisSpacing: 5,
-                    childAspectRatio: 1 / 1.45,
+                    childAspectRatio: 1 / 1.50,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   itemCount: ofProducts?.length ?? 0,
@@ -358,7 +358,7 @@ class _MyHomeState extends State<MyHome> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 5,
                     mainAxisSpacing: 5,
-                    childAspectRatio: 1 / 1.45,
+                    childAspectRatio: 1 / 1.50,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   itemCount: ofDryFruits?.length ?? 0,
@@ -442,7 +442,7 @@ class _MyHomeState extends State<MyHome> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 5,
                     mainAxisSpacing: 5,
-                    childAspectRatio: 1 / 1.45,
+                    childAspectRatio: 1 / 1.50,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   itemCount: ofSpecialChikkies?.length ?? 0,
@@ -456,10 +456,10 @@ class _MyHomeState extends State<MyHome> {
                                     titles: ofSpecialChikkies![index].title!,
                                     image: ofSpecialChikkies![index].images![0],
                                     price: ofSpecialChikkies![index].price!,
-                                    small_description:
-                                        ofSpecialChikkies![index].smallDescription!,
-                                    full_description:
-                                        ofSpecialChikkies![index].fullDescription!)));
+                                    small_description: ofSpecialChikkies![index]
+                                        .smallDescription!,
+                                    full_description: ofSpecialChikkies![index]
+                                        .fullDescription!)));
                       },
                       child: Container(
                         padding: const EdgeInsets.all(15),
