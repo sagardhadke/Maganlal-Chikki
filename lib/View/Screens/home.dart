@@ -14,6 +14,7 @@ class _MyHomeState extends State<MyHome> {
   List<Products>? ofProducts;
   List<BannerImage>? ofBannerImage;
   List<Products>? ofDryFruits;
+  List<Products>? ofSpecialChikkies;
 
   void imageGall() async {
     try {
@@ -22,13 +23,14 @@ class _MyHomeState extends State<MyHome> {
       if (imgGallApi.statusCode == 200) {
         ofHomeImgGall =
             HomeImageGallery.ofHomeImageGall(jsonDecode(imgGallApi.body));
-        print("Home Image Gallery API ${ofHomeImgGall}");
+        Uihelper.logger.d("Home Image Gallery API Response ${ofHomeImgGall}");
+
         setState(() {});
       } else {
         Uihelper.logger.e("Unable to Fetch API");
       }
     } catch (e) {
-      print("Error ${e.toString()}");
+      Uihelper.logger.e("Error ${e.toString()}");
     }
   }
 
@@ -55,13 +57,13 @@ class _MyHomeState extends State<MyHome> {
           "https://appy.trycatchtech.com/v3/maganlalchikki/category_list"));
       if (categoryApi.statusCode == 200) {
         ofCategory = Category.ofCategory(jsonDecode(categoryApi.body));
-        print("Category API Response ${categoryApi}");
+        Uihelper.logger.d("Category API Response ${categoryApi}");
         setState(() {});
       } else {
         Uihelper.logger.e("Unable to Fetch API");
       }
     } catch (e) {
-      print("Error ${e.toString()}");
+      Uihelper.logger.e("Error ${e.toString()}");
     }
   }
 
@@ -97,6 +99,23 @@ class _MyHomeState extends State<MyHome> {
     }
   }
 
+  void SpecialChikkiesApi() async {
+    try {
+      var SpecialChikkiesRes = await http.get(Uri.parse(
+          "https://appy.trycatchtech.com/v3/maganlalchikki/product_list?category_id=1"));
+      if (SpecialChikkiesRes.statusCode == 200) {
+        ofSpecialChikkies =
+            Products.ofProducts(jsonDecode(SpecialChikkiesRes.body));
+        Uihelper.logger.d("Dry Fruits API Response ${SpecialChikkiesRes}");
+        setState(() {});
+      } else {
+        Uihelper.logger.e("Unable to Fetch API");
+      }
+    } catch (e) {
+      Uihelper.logger.e("Error ${e.toString()}");
+    }
+  }
+
   @override
   void initState() {
     imageGall();
@@ -104,6 +123,7 @@ class _MyHomeState extends State<MyHome> {
     namkeenApi();
     bannerImage();
     dryFruitsApi();
+    SpecialChikkiesApi();
     super.initState();
   }
 
@@ -239,45 +259,60 @@ class _MyHomeState extends State<MyHome> {
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   itemCount: ofProducts?.length ?? 0,
                   itemBuilder: (context, index) {
-                    return Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: CachedNetworkImage(
-                              imageUrl: ofProducts![index].images!.isNotEmpty
-                                  ? ofProducts![index].images![0]
-                                  : '',
-                              width: double.infinity,
-                              fit: BoxFit.contain,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyProductsDetails(
+                                    titles: ofProducts![index].title!,
+                                    image: ofProducts![index].images![0],
+                                    price: ofProducts![index].price!,
+                                    small_description:
+                                        ofProducts![index].smallDescription!,
+                                    full_description:
+                                        ofProducts![index].fullDescription!)));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                imageUrl: ofProducts![index].images!.isNotEmpty
+                                    ? ofProducts![index].images![0]
+                                    : '',
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            ofProducts![index].title!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                            const SizedBox(height: 10),
+                            Text(
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              ofProducts![index].title!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            '\₹${ofProducts![index].price}',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                            const SizedBox(height: 5),
+                            Text(
+                              '\₹${ofProducts![index].price}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -305,7 +340,7 @@ class _MyHomeState extends State<MyHome> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Best Selling Dry Fruit",
+                        "Best Selling Dry Fruit Rolls",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -328,45 +363,145 @@ class _MyHomeState extends State<MyHome> {
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   itemCount: ofDryFruits?.length ?? 0,
                   itemBuilder: (context, index) {
-                    return Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyProductsDetails(
+                                    titles: ofDryFruits![index].title!,
+                                    image: ofDryFruits![index].images![0],
+                                    price: ofDryFruits![index].price!,
+                                    small_description:
+                                        ofDryFruits![index].smallDescription!,
+                                    full_description:
+                                        ofDryFruits![index].fullDescription!)));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                imageUrl: ofDryFruits![index].images!.isNotEmpty
+                                    ? ofDryFruits![index].images![0]
+                                    : '',
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              ofDryFruits![index].title!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              '\₹${ofDryFruits![index].price}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: CachedNetworkImage(
-                              imageUrl: ofDryFruits![index].images!.isNotEmpty
-                                  ? ofDryFruits![index].images![0]
-                                  : '',
-                              width: double.infinity,
-                              fit: BoxFit.contain,
+                    );
+                  },
+                ),
+                SizedBox(height: 10),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Our Special chikkies",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 5,
+                    childAspectRatio: 1 / 1.45,
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  itemCount: ofSpecialChikkies?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyProductsDetails(
+                                    titles: ofSpecialChikkies![index].title!,
+                                    image: ofSpecialChikkies![index].images![0],
+                                    price: ofSpecialChikkies![index].price!,
+                                    small_description:
+                                        ofSpecialChikkies![index].smallDescription!,
+                                    full_description:
+                                        ofSpecialChikkies![index].fullDescription!)));
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    ofSpecialChikkies![index].images!.isNotEmpty
+                                        ? ofSpecialChikkies![index].images![0]
+                                        : '',
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            ofDryFruits![index].title!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                            const SizedBox(height: 10),
+                            Text(
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              ofSpecialChikkies![index].title!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            '\₹${ofDryFruits![index].price}',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                            const SizedBox(height: 5),
+                            Text(
+                              '\₹${ofSpecialChikkies![index].price}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
