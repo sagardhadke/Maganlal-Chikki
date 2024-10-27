@@ -17,6 +17,8 @@ export 'package:maganlal_chikki/Widgets/uiHelper.dart';
 //Models
 export 'package:maganlal_chikki/Model/HomeImageGallery.dart';
 export 'package:maganlal_chikki/Model/Category.dart';
+export 'package:maganlal_chikki/Model/AboutModel.dart';
+export 'package:maganlal_chikki/Model/Products.dart';
 
 export 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -29,3 +31,6 @@ export 'package:cached_network_image/cached_network_image.dart';
 
 //Google Fonts
 export 'package:google_fonts/google_fonts.dart';
+
+//Logger
+export 'package:logger/logger.dart';

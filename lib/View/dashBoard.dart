@@ -11,8 +11,8 @@ class _MyDashboardState extends State<MyDashboard> {
   int myIndex = 0;
   List<Widget> widgetList = const [
     MyHome(),
-    MyProducts(),
     MyCategory(),
+    MyProducts(),
     MyAbout()
   ];
   @override

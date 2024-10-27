@@ -78,8 +78,10 @@ class Uihelper {
             )),
         Text(
           text,
+          textAlign: TextAlign.center,
           style: const TextStyle(
-            fontWeight: FontWeight.bold),
+            fontWeight: FontWeight.bold,
+          ),
         )
       ],
     );

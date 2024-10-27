@@ -1,6 +1,5 @@
 import 'package:maganlal_chikki/Exports/myExports.dart';
 import 'package:http/http.dart' as http;
-import 'package:maganlal_chikki/Model/AboutModel.dart';
 
 class MyAbout extends StatefulWidget {
   const MyAbout({super.key});
