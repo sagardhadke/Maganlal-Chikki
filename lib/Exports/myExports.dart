@@ -7,6 +7,9 @@ export 'package:maganlal_chikki/View/Screens/category.dart';
 export 'package:maganlal_chikki/View/Screens/home.dart';
 export 'package:maganlal_chikki/View/Screens/products.dart';
 export 'package:maganlal_chikki/View/Screens/contact.dart';
+export 'package:maganlal_chikki/View/Screens/allProducts.dart';
+export 'package:maganlal_chikki/View/Screens/productsDetails.dart';
+
 
 //Colors
 export 'package:maganlal_chikki/colors.dart';
@@ -19,6 +22,7 @@ export 'package:maganlal_chikki/Model/HomeImageGallery.dart';
 export 'package:maganlal_chikki/Model/Category.dart';
 export 'package:maganlal_chikki/Model/AboutModel.dart';
 export 'package:maganlal_chikki/Model/Products.dart';
+export 'package:maganlal_chikki/Model/BannerImage.dart';
 
 export 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

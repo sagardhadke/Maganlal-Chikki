@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:maganlal_chikki/Exports/myExports.dart';
 
 class MyProductsDetails extends StatefulWidget {
@@ -23,11 +22,6 @@ class _MyProductsDetailsState extends State<MyProductsDetails> {
   @override
   void initState() {
     super.initState();
-    print(widget.titles);
-    print(widget.image);
-    print(widget.price);
-    print(widget.small_description);
-    print(widget.full_description);
   }
 
   @override

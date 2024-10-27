@@ -1,6 +1,5 @@
 import 'package:maganlal_chikki/Exports/myExports.dart';
 import 'package:http/http.dart' as http;
-import 'package:maganlal_chikki/View/Screens/allProducts.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -13,6 +12,7 @@ class _MyHomeState extends State<MyHome> {
   List<HomeImageGallery>? ofHomeImgGall;
   List<Category>? ofCategory;
   List<Products>? ofProducts;
+  List<BannerImage>? ofBannerImage;
 
   void imageGall() async {
     try {
@@ -26,6 +26,21 @@ class _MyHomeState extends State<MyHome> {
       }
     } catch (e) {
       print("Error ${e.toString()}");
+    }
+  }
+
+  void bannerImage() async {
+    try {
+      var bannerImageRes = await http.get(Uri.parse(
+          "https://appy.trycatchtech.com/v3/maganlalchikki/banner_image"));
+      if (bannerImageRes.statusCode == 200) {
+        ofBannerImage =
+            BannerImage.ofBannerImage(jsonDecode(bannerImageRes.body));
+        Uihelper.logger.d("Banner Image API Response $ofBannerImage");
+        setState(() {});
+      }
+    } catch (e) {
+      Uihelper.logger.e("Error ${e.toString()}");
     }
   }
 
@@ -62,6 +77,7 @@ class _MyHomeState extends State<MyHome> {
     imageGall();
     categoriesApi();
     namkeenApi();
+    bannerImage();
     super.initState();
   }
 
@@ -239,7 +255,23 @@ class _MyHomeState extends State<MyHome> {
                   );
                 },
               ),
-
+              SizedBox(height: 10),
+              ImageSlideshow(
+                children: ofBannerImage != null && ofBannerImage!.isNotEmpty
+                    ? [
+                        for (int i = 0; i < ofBannerImage!.length; i++) ...{
+                          CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl: ofBannerImage![i].bannerImage!),
+                        },
+                      ]
+                    : [
+                        Center(child: CircularProgressIndicator.adaptive()),
+                      ],
+                autoPlayInterval: 2500,
+                isLoop: true,
+              ),
+              SizedBox(height: 10),
               
             ],
           ),
