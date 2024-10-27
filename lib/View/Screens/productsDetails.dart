@@ -112,7 +112,7 @@ class _MyProductsDetailsState extends State<MyProductsDetails> {
                     ListTile(
                       leading: Icon(Icons.delivery_dining_sharp),
                       title: Text(
-                        "Get it by Wed, Feb 02",
+                        "Get it by Sun, Oct 27",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),

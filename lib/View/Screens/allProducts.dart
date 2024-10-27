@@ -43,7 +43,21 @@ class _MyAllProductsState extends State<MyAllProducts> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.titles),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.white,
+        actions: const [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.favorite_border_sharp),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.share_outlined),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.shopping_cart_outlined),
+          ),
+        ],
       ),
       body: ofProducts == null
           ? Center(
