@@ -9,6 +9,7 @@ export 'package:maganlal_chikki/View/Screens/products.dart';
 export 'package:maganlal_chikki/View/Screens/contact.dart';
 export 'package:maganlal_chikki/View/Screens/allProducts.dart';
 export 'package:maganlal_chikki/View/Screens/productsDetails.dart';
+export 'package:maganlal_chikki/View/Screens/splashScreen.dart';
 
 
 //Colors
